@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>'0304' 복사 도구</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+    button { padding: 12px 24px; font-size: 16px; }
+    #display { margin-top: 20px; font-size: 18px; color: #333; }
+  </style>
+</head>
+<body>
+  <h2>📎 '0304' 포함 메일 주소 보기<br>👉 복사되는 건 숫자 '0304'만!</h2>
+  <button onclick="copyNext()">다음 줄 보기 + 복사</button>
+  <div id="display"></div>
+
+  <script>
+    const rawLines = `
+
+`.trim().split('\n');
+
+    let shuffled = [];
+    let index = 0;
+
+    function shuffleArray(array) {
+      const clone = [...array];
+      for (let i = clone.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [clone[i], clone[j]] = [clone[j], clone[i]];
+      }
+      return clone;
+    }
+
+    function copyNext() {
+      if (shuffled.length === 0 || index >= shuffled.length) {
+        shuffled = shuffleArray(rawLines);
+        index = 0;
+      }
+
+      const line = shuffled[index++].trim();
+
+      // 클립보드에는 "0304"만 복사
+      navigator.clipboard.writeText("0304").then(() => {
+        document.getElementById('display').innerText = `"${line}" → 숫자 '0304' 복사됨 (${index} / ${shuffled.length})`;
+      });
+    }
+  </script>
+</body>
+</html>
